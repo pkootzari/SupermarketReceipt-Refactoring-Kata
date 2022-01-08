@@ -3,8 +3,6 @@ package dojo.supermarket.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Map;
 import dojo.supermarket.*;
 
@@ -18,7 +16,7 @@ public class Receipt {
             total += item.getTotalPrice();
         }
         for (Discount discount : this.discounts) {
-            total += discount.getDiscountAmount();
+            total -= discount.getDiscountAmount();
         }
         return total;
     }

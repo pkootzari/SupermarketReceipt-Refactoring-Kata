@@ -26,7 +26,7 @@ public class Discount {
 
     public String present(int columns) {
         String name = description + "(" + product.getName() + ")";
-        String value = ReceiptPrinter.presentPrice(discountAmount);
+        String value = ReceiptPrinter.presentPrice(-discountAmount);
 
         return ReceiptPrinter.formatLineWithWhitespace(name, value, columns);
     }

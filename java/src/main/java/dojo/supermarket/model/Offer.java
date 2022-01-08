@@ -1,6 +1,5 @@
 package dojo.supermarket.model;
 
-import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 
 public class Offer {
     SpecialOfferType offerType;
@@ -44,7 +43,7 @@ public class Offer {
         int numberOfPacks = quantity / packSize;
         int itemsInNoPacks = quantity % packSize; 
         double discountAmount = originalPrice(quantity, unitPrice) - (numberOfPacks*2*unitPrice + itemsInNoPacks*unitPrice);
-        return new Discount(product, "3 for 2", -discountAmount);
+        return new Discount(product, "3 for 2", discountAmount);
     }
 
     private Discount getTwoForAmountDiscount(int quantity, double unitPrice) {
@@ -54,7 +53,7 @@ public class Offer {
         int numberOfPacks = quantity / packSize;
         int itemsInNoPacks = quantity % packSize;
         double discountAmount = originalPrice(quantity, unitPrice) - (numberOfPacks*argument + itemsInNoPacks*unitPrice);
-        return new Discount(product, "2 for " + argument, -discountAmount);
+        return new Discount(product, "2 for " + argument, discountAmount);
     }
 
     private Discount getFiveForAmountDiscount(int quantity, double unitPrice) {
@@ -64,10 +63,10 @@ public class Offer {
         int numberOfPacks = quantity / packSize;
         int itemsInNoPacks = quantity % packSize;
         double discountAmount = originalPrice(quantity, unitPrice) - (numberOfPacks*argument + itemsInNoPacks*unitPrice);
-        return new Discount(product, packSize + " for " + argument, -discountAmount);
+        return new Discount(product, packSize + " for " + argument, discountAmount);
     }
 
     private Discount getTenPercentDiscount(int quantity, double unitPrice) {
-        return new Discount(product, argument + "% off",-originalPrice(quantity, unitPrice)*(argument / 100.0));
+        return new Discount(product, argument + "% off",originalPrice(quantity, unitPrice)*(argument / 100.0));
     }
 }
