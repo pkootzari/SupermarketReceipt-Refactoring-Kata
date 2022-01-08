@@ -20,25 +20,6 @@ public class ReceiptPrinter {
         return receipt.present(columns);
     }
 
-    // private String presentReceiptItem(ReceiptItem item) {
-    //     String totalPricePresentation = presentPrice(item.getTotalPrice());
-    //     String name = item.getProduct().getName();
-
-    //     String line = formatLineWithWhitespace(name, totalPricePresentation);
-
-    //     if (item.getQuantity() != 1) {
-    //         line += "  " + presentPrice(item.getPrice()) + " * " + presentQuantity(item) + "\n";
-    //     }
-    //     return line;
-    // }
-
-    // private String presentDiscount(Discount discount) {
-    //     String name = discount.getDescription() + "(" + discount.getProduct().getName() + ")";
-    //     String value = presentPrice(discount.getDiscountAmount());
-
-    //     return formatLineWithWhitespace(name, value);
-    // }
-
     public static String presentTotal(double price, int columns) {
         String name = "Total: ";
         String value = presentPrice(price);
