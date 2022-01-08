@@ -1,5 +1,6 @@
 package dojo.supermarket.model;
 
+import dojo.supermarket.*;
 public class Discount {
     private final String description;
     private final double discountAmount;
@@ -21,6 +22,13 @@ public class Discount {
 
     public Product getProduct() {
         return product;
+    }
+
+    public String present(int columns) {
+        String name = description + "(" + product.getName() + ")";
+        String value = ReceiptPrinter.presentPrice(discountAmount);
+
+        return ReceiptPrinter.formatLineWithWhitespace(name, value, columns);
     }
 
 }

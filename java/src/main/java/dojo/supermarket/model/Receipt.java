@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Map;
+import dojo.supermarket.*;
 
 public class Receipt {
     private List<ReceiptItem> items = new ArrayList<>();
@@ -72,5 +73,21 @@ public class Receipt {
             }
 
         }
+    }
+
+    public String present(int columns) {
+        StringBuilder result = new StringBuilder();
+        for (ReceiptItem item : getItems()) {
+            String receiptItem = item.present(columns);
+            result.append(receiptItem);
+        }
+        for (Discount discount : getDiscounts()) {
+            String discountPresentation = discount.present(columns);
+            result.append(discountPresentation);
+        }
+        
+        result.append("\n");
+        result.append(ReceiptPrinter.presentTotal(getTotalPrice(), columns));
+        return result.toString();
     }
 }

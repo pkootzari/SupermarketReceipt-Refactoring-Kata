@@ -1,6 +1,8 @@
 package dojo.supermarket.model;
 
 import java.util.Objects;
+import dojo.supermarket.*;
+import java.util.Locale;
 
 public class ReceiptItem {
     private final Product product;
@@ -48,5 +50,22 @@ public class ReceiptItem {
         return Objects.hash(product, price, totalPrice, quantity);
     }
 
+    public String present(int columns) {
+        String totalPricePresentation = ReceiptPrinter.presentPrice(getTotalPrice());
+        String name = getProduct().getName();
+
+        String line = ReceiptPrinter.formatLineWithWhitespace(name, totalPricePresentation, columns);
+
+        if (getQuantity() != 1) {
+            line += "  " + ReceiptPrinter.presentPrice(getPrice()) + " * " + presentQuantity() + "\n";
+        }
+        return line;
+    }
+
+    private String presentQuantity() {
+        return ProductUnit.Each.equals(product.getUnit())
+                ? String.format("%x", (int)quantity)
+                : String.format(Locale.UK, "%.3f", quantity);
+    }
 
 }
