@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import dojo.supermarket.*;
 
 public class Receipt {
@@ -11,13 +13,8 @@ public class Receipt {
     private List<Discount> discounts = new ArrayList<>();
 
     public Double getTotalPrice() {
-        double total = 0.0;
-        for (ReceiptItem item : this.items) {
-            total += item.getTotalPrice();
-        }
-        for (Discount discount : this.discounts) {
-            total -= discount.getDiscountAmount();
-        }
+        double total = this.items.stream().mapToDouble(item -> item.getTotalPrice()).sum();
+        total -= this.discounts.stream().mapToDouble(item -> item.getDiscountAmount()).sum();
         return total;
     }
 
@@ -75,14 +72,16 @@ public class Receipt {
 
     public String present(int columns) {
         StringBuilder result = new StringBuilder();
-        for (ReceiptItem item : getItems()) {
-            String receiptItem = item.present(columns);
-            result.append(receiptItem);
-        }
-        for (Discount discount : getDiscounts()) {
-            String discountPresentation = discount.present(columns);
-            result.append(discountPresentation);
-        }
+        result.append(items.stream().map(item -> item.present(columns)).collect(Collectors.joining("")));
+        result.append(discounts.stream().map(item -> item.present(columns)).collect(Collectors.joining("")));
+        // for (ReceiptItem item : getItems()) {
+        //     String receiptItem = item.present(columns);
+        //     result.append(receiptItem);
+        // }
+        // for (Discount discount : getDiscounts()) {
+        //     String discountPresentation = discount.present(columns);
+        //     result.append(discountPresentation);
+        // }
         
         result.append("\n");
         result.append(ReceiptPrinter.presentTotal(getTotalPrice(), columns));
